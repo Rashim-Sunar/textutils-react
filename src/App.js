@@ -1,14 +1,14 @@
 import './App.css';
-// import About from './components/About';
+import About from './components/About';
 import Navbar from './components/Navbar'
 import TextForm from './components/TextForm'
 import Alert from "./components/Alert"
 import React,{useState} from 'react'
-// import {
-  // BrowserRouter as Router,
-  // Routes,
-  // Route
-// } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
 
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
   const toggleMode = () => {
     if(mode === "light"){
       setMode("dark");
-      document.body.style.backgroundColor='grey';
+      document.body.style.backgroundColor='rgb(11, 27, 54)';
       showAlert("Dark mode has been activated","success");
       document.title = "TextUtils-Dark Mode ";
       setInterval(()=>{
@@ -49,17 +49,16 @@ function App() {
 
   return (
    <>
-     {/* <Router> */}
+     <Router>
        <Navbar title="textUtils" mode={mode} toggleMode={toggleMode}/>
        <Alert alert={alert}/>
        <div className="container my-5" > 
-       <TextForm showAlert={showAlert} heading="Enter your text to analyze" mode={mode}/>
-       {/* <Routes> */}
-             {/* <Route exact path="/about" element={<About/>}/> */}
-             {/* <Route exact path='/' element={ <TextForm showAlert={showAlert} heading="Enter your text to analyze" mode={mode}/>}/>       */}
-      {/* </Routes> */}
+       <Routes>
+             <Route exact path="/about" element={<About mode={mode}/>}/>
+             <Route exact path='/' element={ <TextForm showAlert={showAlert} heading="TextUtils - Word counter | character counter | remove extra spaces" mode={mode}/>}/>      
+      </Routes>
       </div>
-      {/* </Router>  */}
+      </Router> 
   </> 
   );
 }

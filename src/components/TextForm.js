@@ -28,27 +28,29 @@ export default function TextForm(props) {
        text.select();
        text.setSelectionRange(0,9999);
        navigator.clipboard.writeText(text.value);
+       document.getSelection().removeAllRanges();
        props.showAlert("Copied to the clipboard","success");
     }
   return (
     <>
         <div className="container">
-            <h2 className={`text-${props.mode==='light'?'dark':'light'}`}>{props.heading}</h2>
+            <h2 className={`text-${props.mode==='light'?'dark':'light'} mb-4`}>{props.heading}</h2>
             <div className="mb-3 " >
-                <textarea rows={8} style={{backgroundColor : props.mode==='light'?'white':'black' ,color : props.mode==='light'?'black':'white' }} className="form-control" value={text} onChange={handleOnChange} id='myBox'></textarea>
+                <textarea rows={8} style={{backgroundColor : props.mode==='light'?'white':'rgb(40, 56, 82)' ,color : props.mode==='light'?'black':'white' }} className="form-control" value={text} onChange={handleOnChange} id='myBox'></textarea>
             </div>
-            <button className="btn btn-primary" onClick={handleUpClick}>Convert to upperCase</button>
-            <button className="btn btn-primary mx-3" onClick={handleLowClick}>Convert to LowerCase</button>
-            <button className="btn btn-primary" onClick={handleCopy}>Copy All Text</button>
-            <button className="btn btn-primary mx-3" onClick={handleClear}>Clear</button>
+            <button disabled={text.length===0} className="btn btn-primary" onClick={handleUpClick}>Convert to upperCase</button>
+            <button disabled={text.length===0} className="btn btn-primary mx-3" onClick={handleLowClick}>Convert to LowerCase</button>
+            <button disabled={text.length===0} className="btn btn-primary" onClick={handleCopy}>Copy All Text</button>
+            <button disabled={text.length===0} className="btn btn-primary mx-3" onClick={handleClear}>Clear</button>
+   
         </div>
 
         <div className={`conatiner my-5 text-${props.mode==='light'?'dark':'light'}`}>
             <h2>Your text Summary Here</h2>
-            <p>{text.split(" ").length} words and {text.length} characters</p>
-            <p> {0.008*text.split(" ").length} minutes  read</p>
+            <p>{text.split(" ").filter((element)=>{return element.length!==0;}).length} words and {text.length} characters</p>
+            <p> {0.008*text.split(" ").filter((element)=>{return element.length!==0;}).length} minutes  read</p>
             <h3>Preview</h3>
-            <p>{text.length > 0 ? text : "Enter something in the textbox to preview here"}</p>
+            <p>{text.length > 0 ? text : "Nothing to preview"}</p>
         </div>
     
     </>
