@@ -18,6 +18,13 @@ export default function TextForm(props) {
         props.showAlert("Changed to Lower case","success");
     }
 
+    const handleExtraSpace = () =>{
+       let newText = text.split(/[ ]+/);
+        SetText(newText.join(" "));
+        props.showAlert("Extra spaces removed","success");
+
+    }
+
     const handleClear = () => {
         SetText("");
         props.showAlert("Text cleared","success");
@@ -41,13 +48,14 @@ export default function TextForm(props) {
             <button disabled={text.length===0} className="btn btn-primary" onClick={handleUpClick}>Convert to upperCase</button>
             <button disabled={text.length===0} className="btn btn-primary mx-3" onClick={handleLowClick}>Convert to LowerCase</button>
             <button disabled={text.length===0} className="btn btn-primary" onClick={handleCopy}>Copy All Text</button>
+            <button disabled={text.length===0} className="btn btn-primary mx-3" onClick={handleExtraSpace}>Clear extra spaces</button>
             <button disabled={text.length===0} className="btn btn-primary mx-3" onClick={handleClear}>Clear</button>
    
         </div>
 
         <div className={`conatiner my-5 text-${props.mode==='light'?'dark':'light'}`}>
             <h2>Your text Summary Here</h2>
-            <p>{text.split(" ").filter((element)=>{return element.length!==0;}).length} words and {text.length} characters</p>
+            <p>{text.split(/\s+/).filter((element)=>{return element.length!==0;}).length} words and {text.length} characters</p>
             <p> {0.008*text.split(" ").filter((element)=>{return element.length!==0;}).length} minutes  read</p>
             <h3>Preview</h3>
             <p>{text.length > 0 ? text : "Nothing to preview"}</p>
